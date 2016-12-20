@@ -19,5 +19,5 @@ virtualenv -p python3 aura_env
 
 * excute the command:
 
-    pip install -r requirements.txt
+        pip install -r requirements.txt
 
