@@ -21,3 +21,11 @@
 
         pip install -r requirements.txt
 
+## TDD
+
+* add testcase and run
+
+    ./go ut
+
+* add source file for the testcase
+
