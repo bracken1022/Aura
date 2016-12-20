@@ -13,3 +13,6 @@ django-crontab==0.7.0
 
 # Test
 mock==1.0.1
+
+# http request
+requests==v2.12.4
