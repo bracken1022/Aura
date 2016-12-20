@@ -7,7 +7,17 @@
 
 ## install virtualenv
 
+    pip install virtualenv
+
 ## build the app env
 
 virtualenv -p python3 aura_env
+
+## install django and other packages
+
+* add requirements.txt
+
+* excute the command:
+
+    pip install -r requirements.txt
 
