@@ -15,5 +15,5 @@ class Pm25DataTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_should_return_400_with_bad_request(self):
-        response = self.client.get('%s?start=30' % ENDPOINT_URL)
+        response = self.client.get('%s?city=xian&startDate=30' % ENDPOINT_URL)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'pm25.apps.Pm25Config',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
