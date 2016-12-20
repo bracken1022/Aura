@@ -17,3 +17,7 @@ class Pm25DataTest(TestCase):
     def test_should_return_400_with_bad_request(self):
         response = self.client.get('%s?city=xian&startDate=30' % ENDPOINT_URL)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_should_return_200_with_successful_request(self):
+        response = self.client.get('%s?city=xian&startDate=20160901&endDate=201609011' % ENDPOINT_URL)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

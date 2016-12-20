@@ -18,6 +18,8 @@ def data_show(request):
         if request.method == 'GET':
             city, start_date, end_date = check_params(request.GET)
 
+            return Response('ok', status=status.HTTP_200_OK)
+
     except PmDataShowIllegalParameterException as e:
         return Response(e.error_message, status=status.HTTP_400_BAD_REQUEST)
 
