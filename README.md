@@ -11,7 +11,7 @@
 
 ## build the app env
 
-virtualenv -p python3 aura_env
+    virtualenv -p python3 aura_env
 
 ## install django and other packages
 
