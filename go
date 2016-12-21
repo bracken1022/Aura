@@ -10,7 +10,16 @@ function main {
       "ut" )
         run_unit_test;;
 
+      "sh" )
+        run_shell;
+
     esac
+}
+
+function run_shell {
+    cd aura
+    python manage.py shell
+    cd ../
 }
 
 function run_unit_test {

@@ -23,10 +23,6 @@ def request_aqi_cn_for_pm_data(city, token):
     return {'status': 'error'}
 
 
-def save_pm_data_to_local(pm_data):
-    pass
-
-
 def validate_json_data(json_data):
     validated_data = {}
 
