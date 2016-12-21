@@ -21,3 +21,7 @@ class Pm25DataTest(TestCase):
     def test_should_return_200_with_successful_request(self):
         response = self.client.get('%s?city=xian&startDate=20160901&endDate=201609011' % ENDPOINT_URL)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_should_return_serializer_data(self):
+
+        pass
