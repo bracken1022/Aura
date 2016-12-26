@@ -3,3 +3,4 @@
 __pycache__
 aura_env
 *.pyc
+.idea

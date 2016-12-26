@@ -8,15 +8,19 @@ from pm25.models.air_quality import AirQuality
 
 API_TOKEN = '158d6f398e60645291520da6cbb4db3bac25e27e'
 
-PM25_URL = 'https://api.waqi.info/feed/%s/?token=%s'
+PM25_URL = 'https://api.waqi.info/feed/%s/'
+UA_BROWSER = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36'
 
 
-def format_aqi_cn_request(city, token):
-    return PM25_URL % (city, token)
+def format_aqi_cn_request(city):
+    return PM25_URL % (city)
 
 
 def request_aqi_cn_for_pm_data(city, token):
-    response = requests.get(PM25_URL % (city, token))
+    parameter = {'token': token}
+    headers = {'user-agent': UA_BROWSER}
+    response = requests.get(format_aqi_cn_request(city), params=parameter, headers=headers)
+
     if response.status_code == status.HTTP_200_OK:
         return response.json()
 
@@ -39,6 +43,18 @@ def validate_json_data(json_data):
     return validated_data
 
 
+def data_exist(validated_data):
+    local_time = validated_data.get('local_time')
+    city_name = validated_data.get('city_name')
+
+    air_quality = AirQuality.objects.filter(local_time=local_time, city_name=city_name)
+
+    if not air_quality:
+        return False
+
+    return True
+
+
 def sync_and_save_pm_data(city, token):
     json_data = request_aqi_cn_for_pm_data(city, token)
 
@@ -47,7 +63,11 @@ def sync_and_save_pm_data(city, token):
 
     validated_data = validate_json_data(json_data['data'])
 
-    air_quality = AirQuality(city_idx=validated_data.get('city_idx'),
+    if data_exist(validated_data):
+        return
+
+    try:
+        air_quality = AirQuality(city_idx=validated_data.get('city_idx'),
                              city_name=validated_data.get('city_name'),
                              city_aqi=validated_data.get('city_aqi'),
                              local_time=validated_data.get('local_time'),
@@ -58,5 +78,15 @@ def sync_and_save_pm_data(city, token):
                              pm_25=validated_data.get('pm_25')
     )
 
-    air_quality.save()
+        air_quality.save()
+    except Exception as e:
+        print('exception happens: %s ' % e)
 
+
+CITYS = ['xian', 'baoji', 'shanghai', 'beijing', 'tianjin',
+ 'wuhan', 'nanjing']
+
+
+def sync_pm25_data_from_usa_embassy():
+    for city in CITYS:
+        sync_and_save_pm_data(city, API_TOKEN)

@@ -11,9 +11,18 @@ function main {
         run_unit_test;;
 
       "sh" )
-        run_shell;
+        run_shell;;
+
+      "sr" )
+        run_server;;
 
     esac
+}
+
+function run_server {
+    cd aura
+    python manage.py runserver
+
 }
 
 function run_shell {

@@ -57,7 +57,7 @@ ROOT_URLCONF = 'aura.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'pm25/views/air_quality/src/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,3 +121,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'pm25/views/air_quality/src/'),
+]
+
+CRONJOBS = [
+    ('*/30 * * * *', 'pm25.service.sync_data.sync_pm25_data_from_usa_embassy', '>> /Users/wbwang/thoughtworks/dive_into_python/django/air_quality/air_quaility/air_quaility/volumn/logs/crontab.log'),
+]
