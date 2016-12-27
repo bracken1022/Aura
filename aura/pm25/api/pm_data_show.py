@@ -20,7 +20,8 @@ def data_show(request):
         if request.method == 'GET':
             city, start_date, end_date = check_params(request.GET)
 #            air_qualities = AirQuality.objects.filter(city_name=city)
-            air_qualities = AirQuality.objects.all()
+            air_qualities = AirQuality.objects.filter(city_name=city.capitalize())
+            print(city.capitalize())
             air_quality_serializer = AirQualitySerializer(air_qualities, many=True)
 
             return JSONResponse(air_quality_serializer.data, status=status.HTTP_200_OK)

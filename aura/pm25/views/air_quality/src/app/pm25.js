@@ -29,11 +29,10 @@ export class Pm25Show extends Component {
       rows.push(
         <tr>
           <td>{data.city_name}</td>
+          <td>{data.local_time}</td>
           <td>{data.pm_25}</td>
         </tr>
       );
-
-      console.log(rows);
     }
 
     return rows;
@@ -52,6 +51,7 @@ export class Pm25Show extends Component {
           <thead>
             <tr>
               <th>city</th>
+              <th>time</th>
               <th>pm25</th>
             </tr>
           </thead>
