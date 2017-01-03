@@ -19,8 +19,8 @@ class SyncDataFromAqiCnTest(TestCase):
         self.assertEqual(200, status.HTTP_200_OK)
 
     def test_format_aqi_cn_request(self):
-        expected = 'https://api.waqi.info/feed/xian/?token=demo'
-        actual = format_aqi_cn_request('xian', 'demo')
+        expected = 'https://api.waqi.info/feed/xian/'
+        actual = format_aqi_cn_request('xian')
 
         self.assertEqual(actual, expected)
 

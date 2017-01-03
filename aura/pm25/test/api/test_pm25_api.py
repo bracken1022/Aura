@@ -38,7 +38,7 @@ class Pm25DataTest(TestCase):
             "tz":"-06:00"
         },
         "city":{
-            "name": "xian",
+            "name": "Xian",
             "url":"https://aqicn.org/city/usa/illinois/chi_sp/",
             "geo":["41.913600","-87.723900"]
         },
@@ -50,12 +50,11 @@ class Pm25DataTest(TestCase):
          }
         })
 
-        expected_json = [{'city_aqi': 71, 'local_time': '2016-12-10 19:00:00', 'pm_25': 71, 'city_idx': 7397, 'city_name': 'xian', 'url': 'https://aqicn.org/city/usa/illinois/chi_sp/', 'geo_x': '41.913600', 'geo_y': '-87.723900', 'time_zone': '-06:00', 'id': 1}]
+        expected_json = [{'city_aqi': 71, 'local_time': '2016-12-10 19:00:00', 'pm_25': 71, 'city_idx': 7397, 'city_name': 'Xian', 'url': 'https://aqicn.org/city/usa/illinois/chi_sp/', 'geo_x': '41.913600', 'geo_y': '-87.723900', 'time_zone': '-06:00', 'id': 1}]
 
         mock_request_aqi_cn_for_pm_data.return_value = mock_json_data
 
-        sync_and_save_pm_data('xian', 'demo')
-        air_quality = AirQuality.objects.first()
+        sync_and_save_pm_data('Xian', 'demo')
 
         response = self.client.get('%s?city=xian&startDate=20160901&endDate=201609011' % ENDPOINT_URL)
 

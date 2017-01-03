@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import PM25Navbar from './pm25navbar';
+import PM25Body from './pm25body';
 
 const dataInit = [];
 
@@ -17,27 +19,6 @@ export class Pm25Show extends Component {
       });
   }
 
-  showDataInTable(datas) {
-    let rows = [];
-
-    if (datas.length === 0) {
-      rows = [];
-      return [];
-    }
-
-    for (const data of datas) {
-      rows.push(
-        <tr>
-          <td>{data.city_name}</td>
-          <td>{data.local_time}</td>
-          <td>{data.pm_25}</td>
-        </tr>
-      );
-    }
-
-    return rows;
-  }
-
   componentDidMount() {
     this.setData();
   }
@@ -45,20 +26,8 @@ export class Pm25Show extends Component {
   render() {
     return (
       <div>
-        <h1>Pm25 show</h1>
-
-        <table>
-          <thead>
-            <tr>
-              <th>city</th>
-              <th>time</th>
-              <th>pm25</th>
-            </tr>
-          </thead>
-
-          <tbody>{this.showDataInTable(this.state.data)}</tbody>
-        </table>
-
+        <PM25Navbar/>
+        <PM25Body bodyData={this.state.data}/>
       </div>
     );
   }

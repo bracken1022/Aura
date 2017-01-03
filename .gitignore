@@ -4,3 +4,5 @@ __pycache__
 aura_env
 *.pyc
 .idea
+node_modules
+npm-debug.log
