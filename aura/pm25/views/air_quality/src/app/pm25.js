@@ -3,53 +3,59 @@ import axios from 'axios';
 import PM25Navbar from './pm25navbar';
 import PM25Body from './pm25body';
 
-const dataInit = [];
+const CITY = ['xian', 'shanghai', 'beijing', 'wuhan'];
 
 export class Pm25Show extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {data: dataInit, data2: dataInit};
+    const dataInit = {};
+    CITY.forEach(city => {
+      dataInit[city] = {values: []};
+    });
+
+    this.state = {data: dataInit};
   }
 
   setData() {
-    axios.get('http://localhost:8000/api/dataShow?city=xian&startDate=20160901&endDate=201609011')
-      .then(response => {
-        const lineData = response.data.map(element => {
-          const pm25 = Number(`${element.pm_25}`);
-          const da = new Date(`${element.local_time}`);
-          const day = Number(da);
+    CITY.forEach(city => {
+      axios.get(`http://localhost:8000/api/dataShow?city=${city}&startDate=20160901&endDate=201609011`)
+        .then(response => {
+          const lineData = response.data.map(element => {
+            const pm = Number(`${element.pm_25}`);
+            const da = new Date(`${element.local_time}`);
 
-          return {x: day, y: pm25};
+            return {localTime: da, pm25: pm};
+          });
+
+          const originalData = this.state.data;
+          originalData[city].values = lineData;
+          originalData[city].name = city;
+
+          this.setState({data: originalData});
         });
-
-        this.setState({data: {name: `${response.data[0].city_name}`, values: lineData}});
-      });
-
-    axios.get('http://localhost:8000/api/dataShow?city=shanghai&startDate=20160901&endDate=201609011')
-      .then(response => {
-        const lineData = response.data.map(element => {
-          const pm25 = Number(`${element.pm_25}`);
-          const da = new Date(`${element.local_time}`);
-          const day = Number(da);
-
-          return {x: day, y: pm25};
-        });
-
-        this.setState({data2: {name: `${response.data[0].city_name}`, values: lineData}});
-      });
+    });
   }
 
   componentDidMount() {
     this.setData();
   }
 
+  renderPM25Body() {
+    const pm25Body = [];
+    CITY.forEach(city => {
+      console.log(this.state.data);
+      pm25Body.push(<PM25Body bodyData={this.state.data[city]}/>);
+    });
+
+    return pm25Body;
+  }
+
   render() {
     return (
       <div>
         <PM25Navbar/>
-        <PM25Body bodyData={this.state.data}/>
-        <PM25Body bodyData={this.state.data2}/>
+        {this.renderPM25Body()}
       </div>
     );
   }
