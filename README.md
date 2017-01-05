@@ -31,4 +31,7 @@
 
 ## MVP
 
-![the first edition](http://github.com/yourname/your-repository/raw/master/readme_sources/photos/aura0.01.png)
+first edition:
+
+![the first edition](https://github.com/bracken1983/Aura/blob/master/readme_sources/photos/aura0.01.png)
+
