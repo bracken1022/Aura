@@ -4,6 +4,8 @@ import PM25Navbar from './pm25navbar';
 import PM25Body from './pm25body';
 
 const CITY = ['xian', 'shanghai', 'beijing', 'wuhan'];
+const PORT = 8000;
+const url = `${window.location.protocol}//${window.location.hostname}:${PORT}`;
 
 export class Pm25Show extends Component {
   constructor(props) {
@@ -19,7 +21,7 @@ export class Pm25Show extends Component {
 
   setData() {
     CITY.forEach(city => {
-      axios.get(`http://localhost:8000/api/dataShow?city=${city}&startDate=20160901&endDate=201609011`)
+      axios.get(`${url}/api/dataShow?city=${city}&startDate=20160901&endDate=201609011`)
         .then(response => {
           const lineData = response.data.map(element => {
             const pm = Number(`${element.pm_25}`);
