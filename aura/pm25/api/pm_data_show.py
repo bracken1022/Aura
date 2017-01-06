@@ -10,6 +10,7 @@ from pm25.exceptions.illegal_parameters_exception import PmDataShowIllegalParame
 from pm25.service.pm_data_service import check_params, JSONResponse
 from pm25.models.air_quality import AirQuality
 from pm25.serializers.pm_data_serializer import AirQualitySerializer
+from pm25.cities import CITIES
 
 
 @csrf_exempt
@@ -29,3 +30,11 @@ def data_show(request):
 
     except Exception as e:
         return Response('Error: %s' % e, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@csrf_exempt
+@api_view(['GET', ])
+@renderer_classes((JSONRenderer, ))
+def data_show_cities(request):
+    if request.method == 'GET':
+        return JSONResponse({'cities': CITIES}, status=status.HTTP_200_OK)

@@ -1,0 +1,4 @@
+
+CITIES = ['xian', 'baoji', 'shanghai', 'beijing', 'tianjin',
+ 'wuhan', 'nanjing']
+

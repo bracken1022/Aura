@@ -4,6 +4,7 @@ import requests
 from rest_framework import status
 
 from pm25.models.air_quality import AirQuality
+from pm25.cities import CITIES
 
 
 API_TOKEN = '158d6f398e60645291520da6cbb4db3bac25e27e'
@@ -83,10 +84,6 @@ def sync_and_save_pm_data(city, token):
         print('exception happens: %s ' % e)
 
 
-CITYS = ['xian', 'baoji', 'shanghai', 'beijing', 'tianjin',
- 'wuhan', 'nanjing']
-
-
 def sync_pm25_data_from_usa_embassy():
-    for city in CITYS:
+    for city in CITIES:
         sync_and_save_pm_data(city, API_TOKEN)

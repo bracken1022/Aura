@@ -1,0 +1,19 @@
+.navbar-inverse .navbar-inner {
+  background-color: #E27403; /* it's flat*/
+  background-image: none;
+}
+
+.navbar-inverse .navbar-inner {
+  background-image: -ms-linear-gradient(top, #E27403, #E49037);
+  background-image: -webkit-linear-gradient(top, #E27403, #E49037);
+  background-image: linear-gradient(to bottom, #E27403, #E49037);
+}
+
+.navbar-default {
+  background-image: linear-gradient(to bottom,#33ccff 0,#75de8c 100%);
+}
+
+body {
+
+}
+

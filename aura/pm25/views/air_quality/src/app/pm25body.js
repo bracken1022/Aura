@@ -5,6 +5,7 @@ import {LineChart} from 'react-d3-basic';
 export default class PM25Body extends Component {
   render() {
     const margins = {left: 100, right: 100, top: 50, bottom: 50};
+    // console.log(this.props.bodyData);
     const chartSeries = [
       {
         field: 'pm25',
@@ -23,7 +24,7 @@ export default class PM25Body extends Component {
     return (
       <Grid>
         <Row className="show-grid">
-          <Col xs={12} md={6}>
+          <Col xs={12} md={12}>
             <LineChart
               margins={margins}
               title={"PM 2.5"}

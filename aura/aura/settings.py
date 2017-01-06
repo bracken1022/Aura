@@ -123,6 +123,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'pm25/views/air_quality/src/'),
+    os.path.join(BASE_DIR, 'pm25/'),
 ]
 
 CRONJOBS = [

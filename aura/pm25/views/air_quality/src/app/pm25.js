@@ -3,7 +3,6 @@ import axios from 'axios';
 import PM25Navbar from './pm25navbar';
 import PM25Body from './pm25body';
 
-const CITY = ['xian', 'shanghai', 'beijing', 'wuhan'];
 const PORT = 8000;
 const url = `${window.location.protocol}//${window.location.hostname}:${PORT}`;
 
@@ -11,32 +10,34 @@ export class Pm25Show extends Component {
   constructor(props) {
     super(props);
 
-    const dataInit = {};
-    CITY.forEach(city => {
-      dataInit[city] = {values: []};
-    });
-
-    this.state = {data: dataInit};
+    this.state = {cities: ['xian'], data: {xian: {name: 'xian', values: []}}};
   }
 
   setData() {
-    CITY.forEach(city => {
-      axios.get(`${url}/api/dataShow?city=${city}&startDate=20160901&endDate=201609011`)
-        .then(response => {
-          const lineData = response.data.map(element => {
-            const pm = Number(`${element.pm_25}`);
-            const da = new Date(`${element.local_time}`);
+    axios.get(`${url}/api/dataShow/cities`)
+      .then(response => {
+        response.data.cities.forEach(city => {
+          console.log(city);
 
-            return {localTime: da, pm25: pm};
-          });
+          axios.get(`${url}/api/dataShow?city=${city}&startDate=20160901&endDate=201609011`)
+            .then(response => {
+              const lineData = response.data.map(element => {
+                const pm = Number(`${element.pm_25}`);
+                const da = new Date(`${element.local_time}`);
 
-          const originalData = this.state.data;
-          originalData[city].values = lineData;
-          originalData[city].name = city;
+                return {localTime: da, pm25: pm};
+              });
 
-          this.setState({data: originalData});
+              const originalData = this.state.data;
+              originalData[city] = {name: city, values: lineData};
+
+              // console.log(originalData);
+
+              this.setState({data: originalData});
+            });
         });
-    });
+        this.setState({cities: response.data.cities});
+      });
   }
 
   componentDidMount() {
@@ -45,9 +46,16 @@ export class Pm25Show extends Component {
 
   renderPM25Body() {
     const pm25Body = [];
-    CITY.forEach(city => {
+    // console.log(this.state.cities);
+    this.state.cities.forEach(city => {
       console.log(this.state.data);
-      pm25Body.push(<PM25Body bodyData={this.state.data[city]}/>);
+      if (this.state.data[city] === undefined) {
+        return;
+      }
+
+      if ('name' in this.state.data[city]) {
+        pm25Body.push(<PM25Body bodyData={this.state.data[city]}/>);
+      }
     });
 
     return pm25Body;
