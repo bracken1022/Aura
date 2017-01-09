@@ -1,11 +1,20 @@
 import React, {Component} from 'react';
 import {Grid, Row, Col} from 'react-bootstrap';
 import {LineChart} from 'react-d3-basic';
+import _ from 'lodash';
 
 export default class PM25Body extends Component {
+  calculateAveragePm25() {
+    const pm25Datas = _.map(this.props.bodyData.values, value => {
+      return value.pm25;
+    });
+    const pm25DataSize = _.size(pm25Datas) === 0 ? 0 : _.size(pm25Datas);
+
+    const div = _.sum(pm25Datas) / pm25DataSize;
+    return div.toFixed(0);
+  }
   render() {
-    const margins = {left: 100, right: 100, top: 50, bottom: 50};
-    // console.log(this.props.bodyData);
+    const margins = {left: 50, right: 50, top: 50, bottom: 50};
     const chartSeries = [
       {
         field: 'pm25',
@@ -16,15 +25,12 @@ export default class PM25Body extends Component {
     const x = function (d) {
       return (d.localTime);
     };
-    // const propData = [{localTime: new Date(2015, 2, 5), pm25: 100},
-    //   {localTime: new Date(2016, 1, 3), pm25: 50},
-    //   {localTime: new Date(2016, 3, 3), pm25: 25}];
     const scale = 'time';
 
     return (
       <Grid>
         <Row className="show-grid">
-          <Col xs={12} md={12}>
+          <Col xs={10} md={10}>
             <LineChart
               margins={margins}
               title={"PM 2.5"}
@@ -35,6 +41,13 @@ export default class PM25Body extends Component {
               x={x}
               xScale={scale}
               />
+          </Col>
+
+          <Col xs={2} md={2}>
+            <em>average</em>
+            <br/>
+            <br/>
+            <p>{this.calculateAveragePm25()}</p>
           </Col>
         </Row>
       </Grid>
