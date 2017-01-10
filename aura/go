@@ -2,7 +2,7 @@
 
 
 set -e
-VIRTUAL_ENV_PATH=aura_env/bin/activate
+VIRTUAL_ENV_PATH=../aura_env/bin/activate
 
 function main {
     source ${VIRTUAL_ENV_PATH}
@@ -20,19 +20,15 @@ function main {
 }
 
 function run_server {
-    cd aura
     python manage.py runserver
 
 }
 
 function run_shell {
-    cd aura
     python manage.py shell
-    cd ../
 }
 
 function run_unit_test {
-  cd aura
 
   if [ "$1" = "--prod" ]; then
     python manage.py test -v 2 --noinput --settings=aura.settings
@@ -42,7 +38,6 @@ function run_unit_test {
     python manage.py test -v 2 --noinput --settings=aura.settings
   fi
 
-  cd ../
 }
 
 main $@
